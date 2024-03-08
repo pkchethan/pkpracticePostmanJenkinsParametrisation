@@ -1,0 +1,1025 @@
+{
+	"info": {
+		"_postman_id": "2fad0f53-e652-4f06-b426-5b6bd430c41b",
+		"name": "XDecOW-DataDriven-2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18784913"
+	},
+	"item": [
+		{
+			"name": "FDLogin_API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"================Consider this as IW- QC Accepts QC Environemt FLOW==============\")\r",
+							"let jsonBody=pm.response.json();\r",
+							"pm.collectionVariables.set(\"fdToken\",jsonBody.data.token);\r",
+							"console.log(pm.variables.get(\"fdToken\"))\r",
+							"\r",
+							"let jsonText=pm.response.text();\r",
+							"\r",
+							"pm.test(\"Headers verification\",function(){\r",
+							"pm.expect(pm.response.headers.get(\"Content-Type\")).to.be.equals(\"application/json; charset=utf-8\");\r",
+							"pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"General API response validations\",function(){\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);    \r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validations on Json Object\",function(){\r",
+							"    pm.expect(jsonBody).to.have.property(\"data\")\r",
+							"    pm.expect(jsonBody.message).to.equal(\"Success\")\r",
+							"    pm.expect(jsonText).to.include(\"Success\")\r",
+							"    pm.expect(jsonText).to.include(\"data\")\r",
+							"    pm.expect(jsonBody).to.have.keys([\"message\",\"data\"])\r",
+							"    pm.expect(jsonBody.data).to.have.key(\"token\")\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,kn;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3RfbmFtZSI6ImZkIiwibGFzdF9uYW1lIjoiZmQiLCJsb2dpbl9pZCI6ImlhbWZkIiwibW9iaWxlX251bWJlciI6Ijg4OTk3NzY2NTUiLCJlbWFpbF9pZCI6Im1hcmtAZ21haWwuY29tIiwicGFzc3dvcmQiOiI1ZjRkY2MzYjVhYTc2NWQ2MWQ4MzI3ZGViODgyY2Y5OSIsInJlc2V0X3Bhc3N3b3JkX2RhdGUiOm51bGwsImxvY2tfc3RhdHVzIjowLCJpc19hY3RpdmUiOjEsIm1zdF9yb2xlX2lkIjo1LCJtc3Rfc2VydmljZV9sb2NhdGlvbl9pZCI6MSwiY3JlYXRlZF9hdCI6IjIwMjEtMTEtMDNUMDg6MDY6MjMuMDAwWiIsIm1vZGlmaWVkX2F0IjoiMjAyMS0xMS0wM1QwODowNjoyMy4wMDBaIiwicm9sZV9uYW1lIjoiRnJvbnREZXNrIiwic2VydmljZV9sb2NhdGlvbiI6IlNlcnZpY2UgQ2VudGVyIEEiLCJpYXQiOjE2NzEyOTAxODV9.HeSfD2zYnpmKytgSK9ASEGeh7OhXTlnOB6NgwC3FyM4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "http://www.phoenix.testautomationacademy.in"
+					},
+					{
+						"key": "Referer",
+						"value": "http://www.phoenix.testautomationacademy.in/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"{{password}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{BASEURL}}/v1/login",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FDCountAPI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"================Consider this as IW- QC Accepts QC Environemt FLOW==============\")\r",
+							"let jsonBody=pm.response.json();\r",
+							"let jsonText=pm.response.text();\r",
+							"\r",
+							"pm.test(\"Headers verification\",function(){\r",
+							"pm.expect(pm.response.headers.get(\"Content-Type\")).to.be.equals(\"application/json; charset=utf-8\");\r",
+							"pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"General API response validations\",function(){\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]); \r",
+							"    pm.expect(jsonBody.message).to.equal(\"Success\")   \r",
+							"})\r",
+							"\r",
+							"pm.test(\"Validations on Json Object\",function(){\r",
+							"    pm.expect(jsonBody).to.have.property(\"data\")    \r",
+							"    pm.expect(jsonText).to.include(\"Success\")\r",
+							"    pm.expect(jsonText).to.include(\"data\")\r",
+							"    pm.expect(jsonBody).to.have.keys([\"message\",\"data\"])\r",
+							"    \r",
+							"})\r",
+							"\r",
+							"var count_del=jsonBody.data[0].count;\r",
+							"console.log(count_del)\r",
+							"pm.collectionVariables.set(\"CountDeliveryToday\",count_del)\r",
+							"\r",
+							"var count_create=jsonBody.data[1].count;\r",
+							"pm.collectionVariables.set(\"CountCreatedToday\",count_create)\r",
+							"\r",
+							"console.log(pm.collectionVariables.get(\"CountCreatedToday\"))\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{fdToken}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,kn;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3RfbmFtZSI6ImZkIiwibGFzdF9uYW1lIjoiZmQiLCJsb2dpbl9pZCI6ImlhbWZkIiwibW9iaWxlX251bWJlciI6Ijg4OTk3NzY2NTUiLCJlbWFpbF9pZCI6Im1hcmtAZ21haWwuY29tIiwicGFzc3dvcmQiOiI1ZjRkY2MzYjVhYTc2NWQ2MWQ4MzI3ZGViODgyY2Y5OSIsInJlc2V0X3Bhc3N3b3JkX2RhdGUiOm51bGwsImxvY2tfc3RhdHVzIjowLCJpc19hY3RpdmUiOjEsIm1zdF9yb2xlX2lkIjo1LCJtc3Rfc2VydmljZV9sb2NhdGlvbl9pZCI6MSwiY3JlYXRlZF9hdCI6IjIwMjEtMTEtMDNUMDg6MDY6MjMuMDAwWiIsIm1vZGlmaWVkX2F0IjoiMjAyMS0xMS0wM1QwODowNjoyMy4wMDBaIiwicm9sZV9uYW1lIjoiRnJvbnREZXNrIiwic2VydmljZV9sb2NhdGlvbiI6IlNlcnZpY2UgQ2VudGVyIEEiLCJpYXQiOjE2NzIzNjI2Mjd9.-gSoOBXRFNZT57k21wiZI0nf7Xg_K5_dofV3Uk9QkL4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "If-None-Match",
+						"value": "W/\"f1-K3QPdeSDwMTKzw6gt8rQekrurv8\""
+					},
+					{
+						"key": "Origin",
+						"value": "http://www.phoenix.testautomationacademy.in"
+					},
+					{
+						"key": "Referer",
+						"value": "http://www.phoenix.testautomationacademy.in/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"url": {
+					"raw": "{{BASEURL}}/v1/dashboard/count",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"v1",
+						"dashboard",
+						"count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FDCreateJObAPI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"================Consider this as IW- QC Accepts QC Environemt FLOW==============\")\r",
+							"var jsonBody=pm.response.json();\r",
+							"var c=pm.collectionVariables.get(\"CountCreatedToday\")\r",
+							"console.log(c)\r",
+							"let latestCount=0;\r",
+							"\r",
+							"/*\r",
+							"if(pm.response.to.have.status(200)){\r",
+							"latestCount=pm.collectionVariables.get(\"CountCreatedToday\")+1;\r",
+							"}\r",
+							"\r",
+							"\r",
+							"console.log(latestCount)\r",
+							"pm.test(\"Verify the incrementing of count\",function(){\r",
+							"if(latestCount==6)\r",
+							"console.log(\"count is matching\")\r",
+							"}) */\r",
+							"\r",
+							"pm.collectionVariables.set(\"jobNumber\",jsonBody.data.job_number)\r",
+							"pm.collectionVariables.set(\"jobID\",jsonBody.data.id)\r",
+							"\r",
+							"pm.test(\"Verify job created successfully\",function(){\r",
+							"    pm.expect(jsonBody.message).to.be.eql(\"Job created successfully. \");\r",
+							"    pm.expect(pm.response.text()).to.include(\"created\")\r",
+							"   // pm.expect(body.message).to.be.equal(\"Success\");\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var imei1=\"PKCHETHAN\"+Math.floor(Math.random()*100000)\r",
+							"var imei2=\"PKCHETHAN\"+Math.floor(Math.random()*100000)\r",
+							"console.log(imei1)\r",
+							"\r",
+							"pm.variables.set(\"imei1\",imei1);\r",
+							"pm.variables.set(\"imei2\",imei2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{fdToken}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,kn;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3RfbmFtZSI6ImZkIiwibGFzdF9uYW1lIjoiZmQiLCJsb2dpbl9pZCI6ImlhbWZkIiwibW9iaWxlX251bWJlciI6Ijg4OTk3NzY2NTUiLCJlbWFpbF9pZCI6Im1hcmtAZ21haWwuY29tIiwicGFzc3dvcmQiOiI1ZjRkY2MzYjVhYTc2NWQ2MWQ4MzI3ZGViODgyY2Y5OSIsInJlc2V0X3Bhc3N3b3JkX2RhdGUiOm51bGwsImxvY2tfc3RhdHVzIjowLCJpc19hY3RpdmUiOjEsIm1zdF9yb2xlX2lkIjo1LCJtc3Rfc2VydmljZV9sb2NhdGlvbl9pZCI6MSwiY3JlYXRlZF9hdCI6IjIwMjEtMTEtMDNUMDg6MDY6MjMuMDAwWiIsIm1vZGlmaWVkX2F0IjoiMjAyMS0xMS0wM1QwODowNjoyMy4wMDBaIiwicm9sZV9uYW1lIjoiRnJvbnREZXNrIiwic2VydmljZV9sb2NhdGlvbiI6IlNlcnZpY2UgQ2VudGVyIEEiLCJpYXQiOjE2NzIzNjI2Mjd9.-gSoOBXRFNZT57k21wiZI0nf7Xg_K5_dofV3Uk9QkL4"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "http://www.phoenix.testautomationacademy.in"
+					},
+					{
+						"key": "Referer",
+						"value": "http://www.phoenix.testautomationacademy.in/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mst_service_location_id\": 0,\r\n    \"mst_platform_id\": 2,\r\n    \"mst_warrenty_status_id\": 2,\r\n    \"mst_oem_id\": 1,\r\n    \"customer\": {\r\n        \"first_name\": \"{{first_name}}\",\r\n        \"last_name\": \"{{last_name}}\",\r\n        \"mobile_number\": \"{{mobile_number}}\",\r\n        \"mobile_number_alt\": \"\",\r\n        \"email_id\": \"{{email_id}}\",\r\n        \"email_id_alt\": \"{{email_id_alt}}\"\r\n    },\r\n    \"customer_address\": {\r\n        \"flat_number\": \"12\",\r\n        \"apartment_name\": \"test\",\r\n        \"street_name\": \"{{street_name}}\",\r\n        \"landmark\": \"test\",\r\n        \"area\": \"test\",\r\n        \"pincode\": \"577201\",\r\n        \"country\": \"India\",\r\n        \"state\": \"Karnataka\"\r\n    },\r\n    \"customer_product\": {\r\n        \"dop\": \"2022-12-29T18:30:00.000Z\",\r\n        \"serial_number\": \"12312312312358\",\r\n        \"imei1\": \"{{imei1}}\",\r\n        \"imei2\": \"{{imei2}}\",\r\n        \"popurl\": \"2022-12-29T18:30:00.000Z\",\r\n        \"product_id\": 1,\r\n        \"mst_model_id\": 2\r\n    },\r\n    \"problems\": [\r\n        {\r\n            \"id\": 28,\r\n            \"remark\": \"test\"\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "{{BASEURL}}/v1/job/create",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"v1",
+						"job",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SupLoginAPI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"================Consider this as IW FLOW==============\")\r",
+							"let jsonBody = pm.response.json();\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);\r",
+							"});\r",
+							"pm.collectionVariables.set(\"supToken\",jsonBody.data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,kn;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "http://www.phoenix.testautomationacademy.in"
+					},
+					{
+						"key": "Referer",
+						"value": "http://www.phoenix.testautomationacademy.in/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{susername}}\",\r\n    \"password\": \"{{password}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{BASEURL}}/v1/login",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SupAssignJobAPI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"================Consider this as IW- QC accepts QC Environemt FLOW==============\")\r",
+							"\r",
+							"var jsonBody=pm.response.json()\r",
+							"\r",
+							"pm.test(\"Assignment is successful or not\",function(){\r",
+							"    pm.expect(jsonBody.message).to.contains(\"successfully\")\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{supToken}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,kn;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "http://www.phoenix.testautomationacademy.in"
+					},
+					{
+						"key": "Referer",
+						"value": "http://www.phoenix.testautomationacademy.in/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"job_id\": {{jobID}},\r\n    \"engineer_id\": {{engineer_id}}\r\n}"
+				},
+				"url": {
+					"raw": "{{BASEURL}}/v1/engineer/assign",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"v1",
+						"engineer",
+						"assign"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EngLoginAPI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonBody=pm.response.json();\r",
+							"pm.collectionVariables.set(\"EngToken\",jsonBody.data.token);\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,kn;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "http://www.phoenix.testautomationacademy.in"
+					},
+					{
+						"key": "Referer",
+						"value": "http://www.phoenix.testautomationacademy.in/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{eusername}}\",\r\n    \"password\": \"{{password}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{BASEURL}}/v1/login",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EngRaiseQuotationAPI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{EngToken}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,kn;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Ik1hcmsiLCJsYXN0X25hbWUiOiJ6dWsiLCJsb2dpbl9pZCI6ImlhbWVuZyIsIm1vYmlsZV9udW1iZXIiOiI4ODk5Nzc2NjU1IiwiZW1haWxfaWQiOiJtYXJrQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiNWY0ZGNjM2I1YWE3NjVkNjFkODMyN2RlYjg4MmNmOTkiLCJyZXNldF9wYXNzd29yZF9kYXRlIjpudWxsLCJsb2NrX3N0YXR1cyI6MCwiaXNfYWN0aXZlIjoxLCJtc3Rfcm9sZV9pZCI6MSwibXN0X3NlcnZpY2VfbG9jYXRpb25faWQiOjEsImNyZWF0ZWRfYXQiOiIyMDIxLTExLTAzVDA4OjA2OjIzLjAwMFoiLCJtb2RpZmllZF9hdCI6IjIwMjEtMTItMjBUMDc6NDI6MDAuMDAwWiIsInJvbGVfbmFtZSI6IkVuZ2luZWVyIiwic2VydmljZV9sb2NhdGlvbiI6IlNlcnZpY2UgQ2VudGVyIEEiLCJpYXQiOjE2NzIzOTc1MDV9.zPf7c_r-gvwznqvuFNBZuMDohfwh_FKrM-s4B9X3XMc"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "http://www.phoenix.testautomationacademy.in"
+					},
+					{
+						"key": "Referer",
+						"value": "http://www.phoenix.testautomationacademy.in/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"job_id\": \"{{jobID}}\",\r\n    \"amount\": 200\r\n}"
+				},
+				"url": {
+					"raw": "{{BASEURL}}/v1/quotation",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"v1",
+						"quotation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EngrepairCompleteAPI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonBody=pm.response.json()\r",
+							"\r",
+							"pm.test(\"Assignment is successful or not\",function(){\r",
+							"    pm.expect(jsonBody.message).to.contains(\"successful\")\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{EngToken}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,kn;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RfbmFtZSI6Ik1hcmsiLCJsYXN0X25hbWUiOiJ6dWsiLCJsb2dpbl9pZCI6ImlhbWVuZyIsIm1vYmlsZV9udW1iZXIiOiI4ODk5Nzc2NjU1IiwiZW1haWxfaWQiOiJtYXJrQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiNWY0ZGNjM2I1YWE3NjVkNjFkODMyN2RlYjg4MmNmOTkiLCJyZXNldF9wYXNzd29yZF9kYXRlIjpudWxsLCJsb2NrX3N0YXR1cyI6MCwiaXNfYWN0aXZlIjoxLCJtc3Rfcm9sZV9pZCI6MSwibXN0X3NlcnZpY2VfbG9jYXRpb25faWQiOjEsImNyZWF0ZWRfYXQiOiIyMDIxLTExLTAzVDA4OjA2OjIzLjAwMFoiLCJtb2RpZmllZF9hdCI6IjIwMjEtMTItMjBUMDc6NDI6MDAuMDAwWiIsInJvbGVfbmFtZSI6IkVuZ2luZWVyIiwic2VydmljZV9sb2NhdGlvbiI6IlNlcnZpY2UgQ2VudGVyIEEiLCJpYXQiOjE2NzIzOTc1MDV9.zPf7c_r-gvwznqvuFNBZuMDohfwh_FKrM-s4B9X3XMc"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "http://www.phoenix.testautomationacademy.in"
+					},
+					{
+						"key": "Referer",
+						"value": "http://www.phoenix.testautomationacademy.in/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"job_id\": \"{{jobID}}\",\r\n    \"problems\": [\r\n        {\r\n            \"id\": 2,\r\n            \"remark\": \"sfd\"\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "{{BASEURL}}/v1/engineer/repaircomplete",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"v1",
+						"engineer",
+						"repaircomplete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "QCLoginAPI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"================Consider this as IW FLOW==============\");\r",
+							"\r",
+							"let jsonBody=pm.response.json();\r",
+							"pm.collectionVariables.set(\"QCToken\",jsonBody.data.token);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,kn;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "http://www.phoenix.testautomationacademy.in"
+					},
+					{
+						"key": "Referer",
+						"value": "http://www.phoenix.testautomationacademy.in/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{qusername}}\",\r\n    \"password\": \"{{password}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{BASEURL}}/v1/login",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "QCCompleteAPI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"================Consider this as IW- QC Accepts QC Environemt FLOW==============\")\r",
+							"var jsonBody=pm.response.json();\r",
+							"pm.test(\"QC completion verification\",function(){\r",
+							"    pm.expect(jsonBody.message).to.be.equals(\"QC completed successfully\")\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{QCToken}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,kn;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZmlyc3RfbmFtZSI6InFjIiwibGFzdF9uYW1lIjoicWMiLCJsb2dpbl9pZCI6ImlhbXFjIiwibW9iaWxlX251bWJlciI6Ijg4OTk3NzY2NTUiLCJlbWFpbF9pZCI6Im1hcmtAZ21haWwuY29tIiwicGFzc3dvcmQiOiI1ZjRkY2MzYjVhYTc2NWQ2MWQ4MzI3ZGViODgyY2Y5OSIsInJlc2V0X3Bhc3N3b3JkX2RhdGUiOm51bGwsImxvY2tfc3RhdHVzIjowLCJpc19hY3RpdmUiOjEsIm1zdF9yb2xlX2lkIjo0LCJtc3Rfc2VydmljZV9sb2NhdGlvbl9pZCI6MSwiY3JlYXRlZF9hdCI6IjIwMjEtMTEtMDNUMDg6MDY6MjMuMDAwWiIsIm1vZGlmaWVkX2F0IjoiMjAyMS0xMS0wM1QwODowNjoyMy4wMDBaIiwicm9sZV9uYW1lIjoiUUMiLCJzZXJ2aWNlX2xvY2F0aW9uIjoiU2VydmljZSBDZW50ZXIgQSIsImlhdCI6MTY3MjM5ODg3NX0.fw2_gI9DNtCb2Eq9EGwlhbI8jcpFc04-vCOwHOES0yg"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "http://www.phoenix.testautomationacademy.in"
+					},
+					{
+						"key": "Referer",
+						"value": "http://www.phoenix.testautomationacademy.in/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"job_id\":{{jobID}}}"
+				},
+				"url": {
+					"raw": "{{BASEURL}}/v1/qc",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"v1",
+						"qc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FDDeliveryAPI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.log(\"================Consider this as IW- QC Accepts QC Environemt FLOW==============\")\r",
+							"var jsonBody=pm.response.json();\r",
+							"pm.test(\"Delivered successfully verification\",function(){\r",
+							"    pm.expect(jsonBody.message).to.be.equals(\"Delivered to customer successfully\")\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "{{fdToken}}",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.9,kn;q=0.8,zh-CN;q=0.7,zh;q=0.6"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZmlyc3RfbmFtZSI6ImZkIiwibGFzdF9uYW1lIjoiZmQiLCJsb2dpbl9pZCI6ImlhbWZkIiwibW9iaWxlX251bWJlciI6Ijg4OTk3NzY2NTUiLCJlbWFpbF9pZCI6Im1hcmtAZ21haWwuY29tIiwicGFzc3dvcmQiOiI1ZjRkY2MzYjVhYTc2NWQ2MWQ4MzI3ZGViODgyY2Y5OSIsInJlc2V0X3Bhc3N3b3JkX2RhdGUiOm51bGwsImxvY2tfc3RhdHVzIjowLCJpc19hY3RpdmUiOjEsIm1zdF9yb2xlX2lkIjo1LCJtc3Rfc2VydmljZV9sb2NhdGlvbl9pZCI6MSwiY3JlYXRlZF9hdCI6IjIwMjEtMTEtMDNUMDg6MDY6MjMuMDAwWiIsIm1vZGlmaWVkX2F0IjoiMjAyMS0xMS0wM1QwODowNjoyMy4wMDBaIiwicm9sZV9uYW1lIjoiRnJvbnREZXNrIiwic2VydmljZV9sb2NhdGlvbiI6IlNlcnZpY2UgQ2VudGVyIEEiLCJpYXQiOjE2NzIzOTkzMDB9.lwYQ_Y44ESJC7YeXgukNpc6HOlaQBOiBub2BU5Kr8II"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Origin",
+						"value": "http://www.phoenix.testautomationacademy.in"
+					},
+					{
+						"key": "Referer",
+						"value": "http://www.phoenix.testautomationacademy.in/"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"job_id\": {{jobID}}\r\n}"
+				},
+				"url": {
+					"raw": "{{BASEURL}}/v1/fd/delivertocustomer",
+					"host": [
+						"{{BASEURL}}"
+					],
+					"path": [
+						"v1",
+						"fd",
+						"delivertocustomer"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.variables.get(\"variable_key\");",
+					"pm.collectionVariables.get(\"variable_key\");"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "CountDeliveryToday",
+			"value": "12"
+		},
+		{
+			"key": "CountCreatedToday",
+			"value": "3"
+		},
+		{
+			"key": "jobNumber",
+			"value": ""
+		},
+		{
+			"key": "jobID",
+			"value": ""
+		},
+		{
+			"key": "fdToken",
+			"value": ""
+		},
+		{
+			"key": "supToken",
+			"value": ""
+		},
+		{
+			"key": "engineer_id",
+			"value": "2",
+			"type": "string"
+		},
+		{
+			"key": "EngToken",
+			"value": ""
+		},
+		{
+			"key": "QCToken",
+			"value": ""
+		}
+	]
+}
